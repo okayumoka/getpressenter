@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
-require 'csv'
+require 'fileutils'
 
 puts 'Press Enterの本文を取得します。'
 
@@ -89,9 +89,11 @@ end
 # puts content_url_list
 
 # 本文取得と保存
+FileUtils.mkdir_p('./output')
 novel_list = []
 content_url_list.each do |url|
-  novel_list << getNovel(url)
+  novel = getNovel(url)
+  novel_list << novel
   saveFile novel[:title], novel[:text]
 end
 
