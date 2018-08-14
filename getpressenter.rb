@@ -59,6 +59,10 @@ def getNovel(url)
   title = doc.css("#cmsTitle").first.at(:h1).text
   text = doc.css("#cmsBody").first.css(".inner").text
 
+  title.gsub! /（/, '('
+  title.gsub! /）/, ')'
+  text.gsub!(/[0-9]* /) { |word| word.to_s.strip }
+
   return {
     url: url,
     title: title, 
