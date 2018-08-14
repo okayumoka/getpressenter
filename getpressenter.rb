@@ -57,7 +57,11 @@ def getNovel(url)
   # doc = Nokogiri::HTML.parse(html, nil, charset)
   doc = Nokogiri::HTML.parse(html, url)
   title = doc.css("#cmsTitle").first.at(:h1).text
-  text = doc.css("#cmsBody").first.css(".inner").text
+  # text = doc.css("#cmsBody").first.css(".inner").text
+
+  inner = doc.css("#cmsBody").first.css(".inner")
+  inner.search(:br).each { |br| br.replace("\n") }
+  text = inner.text
 
   title.gsub! /（/, '('
   title.gsub! /）/, ')'
